@@ -98,10 +98,92 @@ $(function () {
     // *********************************************************************
     // Do not modify the JS objects above. You will write your code below.
     // *********************************************************************
+// Top Bar & Header Stats
+    $("#username").text(username);
+    $(".revenue-amt").text(revenueAmt);
+    $("#customer-num").text(customerNum);
+    $("#orders-amt").text(ordersAmt);
+    $("#issues-amt").text(issuesAmt);
+
+    // Sales Table
+    sales.forEach(function (item) {
+        let row = `<tr>
+            <td>${item.product}</td>
+            <td>${item.quantity}</td>
+            <td>${item.revenue}</td>
+        </tr>`;
+        $("#salesTableBody").append(row);
+    });
+
+    // Activity List
+    activities.forEach(function (act) {
+        $("#activity-list").append($("<li>").text(act.message));
+    });
+
+    // Recent Customers Table
+    customers.forEach(function (cust) {
+        let statusClass = cust.status.toLowerCase() === "active" ? "status-active" : "status-pending";
+        let row = `<tr>
+            <td>${cust.name}</td>
+            <td>${cust.email}</td>
+            <td><span class="status ${statusClass}">${cust.status}</span></td>
+            <td>${cust.joined}</td>
+        </tr>`;
+        $("#customerTableBody").append(row);
+    });
+
+    // System Status List
+    messages.forEach(function (msg) {
+        $("#system-status-list").append($("<li>").text(msg.messsage));
+    });
+
+    // Notifications
+    $("#notification-num").text(notifAmt);
+    notifications.forEach(function (notif) {
+        $("#notifications-list").append($("<li>").text(notif.messsage));
+    });
+
+    // Tasks List
+    tasks.forEach(function (task) {
+        $("#tasks-list").append($("<li>").text(task.messsage));
+    });
 
 
 
-       
+    // Convert all buttons to jQuery Button Widgets
+    $("button").button();
+
+    // Dashboard Tabs Widget
+    $("#dashboardTabs").tabs();
+
+    // Accordion Widget
+    $("#accordion").accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
+
+    // Customer Dialog Widget
+    $("#customerDialog").dialog({
+        autoOpen: false,
+        modal: true,
+        width: 400,
+        buttons: {
+            "Create Customer": function () {
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    // Open Dialog on button click
+    $("#newCustomerButton").on("click", function () {
+        $("#customerDialog").dialog("open");
+    });
+
+    // Datepicker Widget inside Customer Dialog
+    $("#customerDate").datepicker();
 
 
     });
